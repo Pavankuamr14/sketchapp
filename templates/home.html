@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Sketching</title>
+    <style>
+        /* CSS styles */
+
+        /* Center align the title */
+        h1 {
+            text-align: center;
+        }
+
+        .image-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-top: 50px;
+        }
+
+        .image-container img {
+            width: 500px;
+        }
+
+        body {
+            background: #c2e59c;  /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #64b3f4, #c2e59c);  /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #64b3f4, #c2e59c); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        }
+
+        /* Center align the buttons */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        /* Increase the button size */
+        .button-container input[type="submit"] {
+            padding: 10px 20px;
+            font-size: 18px;
+        }
+
+        /* Style the download button */
+        .button-container a.download-button {
+            /* display: inline-block; */
+            /* padding: 10px 20px; */
+            /* width: 100px; */
+            height: 30px;
+            font-size: 18px;
+            background-color: #ce11c8;
+            color: white;
+            text-decoration: none;
+            /* margin-left: 10px; */
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Image Sketching</h1>
+
+    <form action="{{ url_for('sketch') }}" method="POST" enctype="multipart/form-data">
+        <div class="button-container">Choose a file
+            <label for="file-upload" class="custom-file-upload">
+                <i class="fas fa-upload"></i> 
+            </label>
+            <input id="file-upload" type="file" name="file" accept="image/*" required>
+            <input type="submit" value="Upload">
+        </div>
+    </form>
+
+    {% if org_img_name and sketch_img_name %}
+        <h2>Original Image:</h2>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename=org_img_name) }}" alt="Original Image">
+
+            <div class="button-container">
+                <a href="{{ url_for('download', filename=sketch_img_name) }}" class="download-button">Download Sketch</a>
+            </div>
+
+            <h2>Sketch Image:</h2>
+            <img src="{{ url_for('static', filename=sketch_img_name) }}" alt="Sketch Image">
+        </div>
+    {% endif %}
+</body>
+</html>
